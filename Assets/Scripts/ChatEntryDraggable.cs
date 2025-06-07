@@ -18,7 +18,7 @@ public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler
     public GameObject placeholderPrefab;
     
     // Tuning values
-    private float returnSpeed = 1000f;
+    private float returnSpeed = 500f;
 
     void Awake()
     {
