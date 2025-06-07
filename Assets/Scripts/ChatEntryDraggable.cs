@@ -13,10 +13,10 @@ public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler
     private CanvasGroup canvasGroup;
     private Vector2 returnTarget;
     private bool returning;
-    
+
     // Assign in inspector
     public GameObject placeholderPrefab;
-    
+
     // Tuning values
     private float returnSpeed = 500f;
 
@@ -45,34 +45,34 @@ public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler
     }
 
     public void OnEndDrag(PointerEventData eventData)
-{
-    var results = new List<RaycastResult>();
-    EventSystem.current.RaycastAll(eventData, results);
-
-    GameObject hitBin = null;
-    foreach (var result in results)
     {
-        if (result.gameObject.CompareTag("Bin"))
+        var results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+
+        GameObject hitBin = null;
+        foreach (var result in results)
         {
-            hitBin = result.gameObject;
-            break;
+            if (result.gameObject.CompareTag("Bin"))
+            {
+                hitBin = result.gameObject;
+                break;
+            }
+        }
+
+        if (hitBin != null)
+        {
+            // Dropped in a bin
+            placeholder.GetComponent<Placeholder>().Collapse();
+            Destroy(gameObject);
+        }
+        else
+        {
+            // Return to original spot
+            returnTarget = placeholder.position;
+            returning = true;
+            canvasGroup.blocksRaycasts = true;
         }
     }
-
-    if (hitBin != null)
-    {
-        // Dropped in a bin
-        placeholder.GetComponent<Placeholder>().Collapse();
-        Destroy(gameObject);
-    }
-    else
-    {
-        // Return to original spot
-        returnTarget = placeholder.position;
-        returning = true;
-        canvasGroup.blocksRaycasts = true;
-    }
-}
 
 
     void Update()
