@@ -11,14 +11,14 @@ public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler
 
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
-    private Vector2 returnTarget;
+    private Vector3 returnTarget;
     private bool returning;
 
     // Assign in inspector
     public GameObject placeholderPrefab;
 
     // Tuning values
-    private float returnSpeed = 500f;
+    private float returnSpeed = 50f;
 
     void Awake()
     {
@@ -80,7 +80,7 @@ public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler
         if (returning)
         {
             transform.position = Vector3.MoveTowards(transform.position, returnTarget, returnSpeed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, returnTarget) < 1f)
+            if (Vector3.Distance(transform.position, returnTarget) < 0.01f)
             {
                 transform.SetParent(originalParent);
                 transform.SetSiblingIndex(placeholder.GetSiblingIndex());
