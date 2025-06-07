@@ -5,10 +5,10 @@ using System.Collections.Generic;
 
 public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public Transform originalParent;
-    public RectTransform placeholder;
-    public Canvas canvas;
-    public float returnSpeed = 1000f;
+    private Transform originalParent;
+    private RectTransform placeholder;
+    private Canvas canvas;
+    private float returnSpeed = 1000f;
 
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;

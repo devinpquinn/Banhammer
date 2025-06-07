@@ -428,8 +428,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b3719971ad80a14eaf9c705c9ef25e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originalParent: {fileID: 0}
-  placeholder: {fileID: 0}
-  canvas: {fileID: 0}
-  returnSpeed: 1000
   placeholderPrefab: {fileID: 902365468478483311, guid: 3dd98c938cb851c48839c452a5b0daaf, type: 3}
