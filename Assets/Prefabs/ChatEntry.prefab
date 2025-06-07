@@ -296,8 +296,10 @@ GameObject:
   - component: {fileID: 3701702566395251642}
   - component: {fileID: 5278631149694847194}
   - component: {fileID: 8826362373242758398}
+  - component: {fileID: 7219085907969285365}
+  - component: {fileID: 5723962584135301519}
   m_Layer: 5
-  m_Name: Message
+  m_Name: ChatEntry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -402,3 +404,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!225 &7219085907969285365
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8888729570350321964}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &5723962584135301519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8888729570350321964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b3719971ad80a14eaf9c705c9ef25e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalParent: {fileID: 0}
+  placeholder: {fileID: 0}
+  canvas: {fileID: 0}
+  returnSpeed: 1000
+  placeholderPrefab: {fileID: 902365468478483311, guid: 3dd98c938cb851c48839c452a5b0daaf, type: 3}
