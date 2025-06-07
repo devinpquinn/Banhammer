@@ -26,6 +26,7 @@ public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler
     {
         originalParent = transform.parent;
         placeholder = Instantiate(placeholderPrefab, originalParent).GetComponent<RectTransform>();
+        placeholder.sizeDelta = new Vector2(rectTransform.sizeDelta.x, rectTransform.sizeDelta.y);
         placeholder.SetSiblingIndex(transform.GetSiblingIndex());
 
         transform.SetParent(canvas.transform); // drag on top
