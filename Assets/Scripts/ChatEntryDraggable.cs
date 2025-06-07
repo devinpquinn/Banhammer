@@ -8,12 +8,17 @@ public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler
     private Transform originalParent;
     private RectTransform placeholder;
     private Canvas canvas;
-    private float returnSpeed = 1000f;
 
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
     private Vector2 returnTarget;
     private bool returning;
+    
+    // Assign in inspector
+    public GameObject placeholderPrefab;
+    
+    // Tuning values
+    private float returnSpeed = 1000f;
 
     void Awake()
     {
@@ -57,8 +62,8 @@ public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler
     if (hitBin != null)
     {
         // Dropped in a bin
+        placeholder.GetComponent<Placeholder>().Collapse();
         Destroy(gameObject);
-        StartCoroutine(CollapseAndDestroyPlaceholder());
     }
     else
     {
@@ -84,24 +89,4 @@ public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler
             }
         }
     }
-
-    IEnumerator CollapseAndDestroyPlaceholder()
-    {
-        float duration = 0.3f;
-        float elapsed = 0f;
-        float startHeight = placeholder.sizeDelta.y;
-
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            float h = Mathf.Lerp(startHeight, 0, elapsed / duration);
-            placeholder.sizeDelta = new Vector2(placeholder.sizeDelta.x, h);
-            yield return null;
-        }
-
-        Destroy(placeholder.gameObject);
-    }
-
-    // Assign this prefab in the inspector
-    public GameObject placeholderPrefab;
 }
