@@ -92,8 +92,8 @@ public class ChatSpawner : MonoBehaviour
         if (fitter != null) fitter.enabled = true;
 
         // Force layout now (important!)
-        LayoutRebuilder.ForceRebuildLayoutImmediate(entryRect);
         LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)chatLogContainer);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(entryRect);
     }
 
     public enum ChatCategory { Normal, Warning, Ban }
