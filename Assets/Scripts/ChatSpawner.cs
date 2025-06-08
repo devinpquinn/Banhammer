@@ -70,34 +70,31 @@ public class ChatSpawner : MonoBehaviour
 
         string username = usernames[Random.Range(0, usernames.Count)];
 
-        GameObject entry = Instantiate(chatEntryPrefab, chatLogContainer);
+        GameObject entry = Instantiate(chatEntryPrefab);
 
+        // Get references
+        RectTransform entryRect = entry.GetComponent<RectTransform>();
+        ContentSizeFitter fitter = entry.GetComponent<ContentSizeFitter>();
+        VerticalLayoutGroup layoutGroup = entry.GetComponent<VerticalLayoutGroup>();
+
+        // Disable layout while populating
+        if (fitter != null) fitter.enabled = false;
+
+        // Set parent (without world position retention)
+        entry.transform.SetParent(chatLogContainer, false);
+
+        // Set username + message
         var texts = entry.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
         texts[0].text = username;
         texts[1].text = msgText;
 
-        entry.GetComponent<ChatEntryDraggable>().category = category;
-
-        // UI refresh
-        var fitter = chatLogContainer.GetComponent<ContentSizeFitter>();
-        if (fitter != null)
-            fitter.enabled = false;
-
+        // Force layout now (important!)
+        LayoutRebuilder.ForceRebuildLayoutImmediate(entryRect);
         LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)chatLogContainer);
 
-        if (fitter != null)
-            fitter.enabled = true;
-            
-        // Scroll to bottom
-        var scrollRect = chatLogContainer.GetComponentInParent<ScrollRect>();
-        if (scrollRect != null)
-        {
-            Canvas.ForceUpdateCanvases(); // Ensure layout is updated before scrolling
-            scrollRect.verticalNormalizedPosition = 0f; // Scroll to bottom
-        }
-
+        // Re-enable layout fitter
+        if (fitter != null) fitter.enabled = true;
     }
-
 
     public enum ChatCategory { Normal, Warning, Ban }
 }

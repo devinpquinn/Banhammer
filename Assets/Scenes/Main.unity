@@ -963,7 +963,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minDelay: 0.5
-  maxDelay: 5
+  maxDelay: 3
   warningChance: 0.1
   banChance: 0.05
   chatLogContainer: {fileID: 1641641232}
