@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ChatSpawner : MonoBehaviour
 {
@@ -18,12 +19,16 @@ public class ChatSpawner : MonoBehaviour
     private MessageSource normalMessages;
     private MessageSource warningMessages;
     private MessageSource banMessages;
+    private List<string> usernames;
 
     void Start()
     {
         normalMessages = new MessageSource("normal");
         warningMessages = new MessageSource("warning");
         banMessages = new MessageSource("ban");
+
+        usernames = new List<string>(Resources.Load<TextAsset>("usernames")
+            .text.Split('\n', System.StringSplitOptions.RemoveEmptyEntries));
 
         StartCoroutine(SpawnLoop());
     }
@@ -62,10 +67,17 @@ public class ChatSpawner : MonoBehaviour
             category = ChatCategory.Normal;
         }
 
+        string username = usernames[Random.Range(0, usernames.Count)];
+
         GameObject entry = Instantiate(chatEntryPrefab, chatLogContainer);
-        entry.transform.Find("MessageText").GetComponent<TMPro.TextMeshProUGUI>().text = msgText;
+
+        var texts = entry.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
+        texts[0].text = username;
+        texts[1].text = msgText;
+
         entry.GetComponent<ChatEntryDraggable>().category = category;
     }
+
 
     public enum ChatCategory { Normal, Warning, Ban }
 }
