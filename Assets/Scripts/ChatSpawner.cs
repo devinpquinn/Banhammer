@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -76,6 +77,25 @@ public class ChatSpawner : MonoBehaviour
         texts[1].text = msgText;
 
         entry.GetComponent<ChatEntryDraggable>().category = category;
+
+        // UI refresh
+        var fitter = chatLogContainer.GetComponent<ContentSizeFitter>();
+        if (fitter != null)
+            fitter.enabled = false;
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)chatLogContainer);
+
+        if (fitter != null)
+            fitter.enabled = true;
+            
+        // Scroll to bottom
+        var scrollRect = chatLogContainer.GetComponentInParent<ScrollRect>();
+        if (scrollRect != null)
+        {
+            Canvas.ForceUpdateCanvases(); // Ensure layout is updated before scrolling
+            scrollRect.verticalNormalizedPosition = 0f; // Scroll to bottom
+        }
+
     }
 
 
