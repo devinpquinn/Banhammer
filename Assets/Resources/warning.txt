@@ -1,0 +1,10 @@
+warning message 0
+warning message 1
+warning message 2
+warning message 3
+warning message 4
+warning message 5
+warning message 6
+warning message 7
+warning message 8
+warning message 9

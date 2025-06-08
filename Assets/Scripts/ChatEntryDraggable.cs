@@ -13,6 +13,9 @@ public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler
     private CanvasGroup canvasGroup;
     private Vector3 returnTarget;
     private bool returning;
+    
+    //  View in inspector
+    public ChatSpawner.ChatCategory category;
 
     // Assign in inspector
     public GameObject placeholderPrefab;
