@@ -27,7 +27,6 @@ public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler
     {
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
-        canvas = GetComponentInParent<Canvas>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -37,6 +36,11 @@ public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler
         placeholder.sizeDelta = new Vector2(rectTransform.sizeDelta.x, rectTransform.sizeDelta.y);
         placeholder.SetSiblingIndex(transform.GetSiblingIndex());
 
+        if(canvas == null)
+        {
+            canvas = GetComponentInParent<Canvas>();
+        }
+        
         transform.SetParent(canvas.transform); // drag on top
         canvasGroup.blocksRaycasts = false;
         returning = false;
