@@ -87,13 +87,13 @@ public class ChatSpawner : MonoBehaviour
         var texts = entry.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
         texts[0].text = username;
         texts[1].text = msgText;
+        
+        // Re-enable layout fitter
+        if (fitter != null) fitter.enabled = true;
 
         // Force layout now (important!)
         LayoutRebuilder.ForceRebuildLayoutImmediate(entryRect);
         LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)chatLogContainer);
-
-        // Re-enable layout fitter
-        if (fitter != null) fitter.enabled = true;
     }
 
     public enum ChatCategory { Normal, Warning, Ban }
