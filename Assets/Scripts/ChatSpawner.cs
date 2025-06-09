@@ -75,7 +75,6 @@ public class ChatSpawner : MonoBehaviour
         // Get references
         RectTransform entryRect = entry.GetComponent<RectTransform>();
         ContentSizeFitter fitter = entry.GetComponent<ContentSizeFitter>();
-        VerticalLayoutGroup layoutGroup = entry.GetComponent<VerticalLayoutGroup>();
 
         // Disable layout while populating
         if (fitter != null) fitter.enabled = false;
