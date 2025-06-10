@@ -12,18 +12,18 @@ public class ChatSpawner : MonoBehaviour
     public ScrollRect scrollRect;               // optional auto-scroll
 
     [Header("Phase Durations (seconds)")]
-    public float preStreamGreetingSeconds  = 5f;
-    public float streamSeconds             = 60f;
-    public float postStreamGoodbyeSeconds  = 5f;
+    public float preStreamGreetingSeconds = 5f;
+    public float streamSeconds = 60f;
+    public float postStreamGoodbyeSeconds = 5f;
 
     [Header("Spawn Delay Ranges")]
-    public Vector2 greetingDelay   = new(0.25f, 0.45f);  // faster
-    public Vector2 normalDelay     = new(0.60f, 1.50f);  // main phase
-    public Vector2 goodbyeDelay    = new(0.25f, 0.45f);  // faster
+    public Vector2 greetingDelay = new(0.25f, 0.45f);  // faster
+    public Vector2 normalDelay = new(0.60f, 1.50f);  // main phase
+    public Vector2 goodbyeDelay = new(0.25f, 0.45f);  // faster
 
     [Header("Main-Phase Probabilities")]
-    [Range(0,1)] public float warningChance = 0.10f;
-    [Range(0,1)] public float banChance     = 0.03f;
+    [Range(0, 1)] public float warningChance = 0.10f;
+    [Range(0, 1)] public float banChance = 0.03f;
 
     /* ─────────────────────  private ───────────────────── */
     private MessageSource normalSrc, warningSrc, banSrc;
@@ -32,11 +32,11 @@ public class ChatSpawner : MonoBehaviour
 
     private void Start()
     {
-        normalSrc   = new MessageSource("normal");
-        warningSrc  = new MessageSource("warning");
-        banSrc      = new MessageSource("ban");
-        helloSrc    = new MessageSource("hello");
-        goodbyeSrc  = new MessageSource("goodbye");
+        normalSrc = new MessageSource("normal");
+        warningSrc = new MessageSource("warning");
+        banSrc = new MessageSource("ban");
+        helloSrc = new MessageSource("hello");
+        goodbyeSrc = new MessageSource("goodbye");
 
         usernames = new List<string>(
             Resources.Load<TextAsset>("usernames")
@@ -48,19 +48,25 @@ public class ChatSpawner : MonoBehaviour
     /* ─────────────  master coroutine driving one round ───────────── */
     private IEnumerator StreamLoop()
     {
-        while (true)           // run forever; remove loop if you only want one round
+        // Clear chat log at the start
+        foreach (Transform child in chatLogContainer)
         {
-            yield return StartCoroutine(SpawnBurst(
+            Destroy(child.gameObject);
+        }
+        
+        // Optional auto-scroll reset
+        if (scrollRect != null)
+        {
+            scrollRect.verticalNormalizedPosition = 0f;
+        }
+    
+        yield return StartCoroutine(SpawnBurst(
                 helloSrc, greetingDelay, preStreamGreetingSeconds));
 
-            yield return StartCoroutine(SpawnMainPhase());
+        yield return StartCoroutine(SpawnMainPhase());
 
-            yield return StartCoroutine(SpawnBurst(
-                goodbyeSrc, goodbyeDelay, postStreamGoodbyeSeconds));
-
-            // pause before next round (optional)
-            yield return new WaitForSeconds(3f);
-        }
+        yield return StartCoroutine(SpawnBurst(
+            goodbyeSrc, goodbyeDelay, postStreamGoodbyeSeconds));
     }
 
     /* ─────────────── 1) greetings & goodbyes ─────────────── */
@@ -94,11 +100,17 @@ public class ChatSpawner : MonoBehaviour
     {
         float r = Random.value;
         if (r < banChance)
+        {
             SpawnEntry(banSrc.GetNextMessage(), ChatCategory.Ban);
+        }
         else if (r < banChance + warningChance)
+        {
             SpawnEntry(warningSrc.GetNextMessage(), ChatCategory.Warning);
+        }
         else
+        {
             SpawnEntry(normalSrc.GetNextMessage(), ChatCategory.Normal);
+        }
     }
 
     private void SpawnEntry(string msg, ChatCategory cat)
@@ -122,10 +134,10 @@ public class ChatSpawner : MonoBehaviour
         var texts = entry.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
         texts[0].text = user;
         texts[1].text = msg;
-        
+
         // category (for drag bins)
         entry.GetComponent<ChatEntryDraggable>().category = cat;
-        
+
         // Re-enable layout fitter
         if (fitter != null) fitter.enabled = true;
 
