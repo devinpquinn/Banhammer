@@ -962,12 +962,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de1c053e38c42b24e8eda96d493de902, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDelay: 0.5
-  maxDelay: 3
-  warningChance: 0.1
-  banChance: 0.05
   chatLogContainer: {fileID: 1641641232}
   chatEntryPrefab: {fileID: 8888729570350321964, guid: 9e403c4d7f327f7428721bf839437246, type: 3}
+  scrollRect: {fileID: 1514543229}
+  preStreamGreetingSeconds: 5
+  streamSeconds: 60
+  postStreamGoodbyeSeconds: 5
+  greetingDelay: {x: 0.25, y: 1}
+  normalDelay: {x: 0.5, y: 3}
+  goodbyeDelay: {x: 0.25, y: 1}
+  warningChance: 0.1
+  banChance: 0.05
 --- !u!4 &1147872986
 Transform:
   m_ObjectHideFlags: 0
