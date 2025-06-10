@@ -1003,17 +1003,17 @@ MonoBehaviour:
   banChance: 0.05
   mistakeWeights:
   - type: 0
-    weight: 1
+    weight: 4
   - type: 1
-    weight: 1
+    weight: 2
   - type: 2
-    weight: 1
+    weight: 3
   - type: 3
-    weight: 1
+    weight: 3
   - type: 4
-    weight: 1
+    weight: 8
   - type: 5
-    weight: 1
+    weight: 6
 --- !u!4 &1147872986
 Transform:
   m_ObjectHideFlags: 0
