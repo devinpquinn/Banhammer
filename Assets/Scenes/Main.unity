@@ -658,6 +658,7 @@ GameObject:
   - component: {fileID: 956320442}
   - component: {fileID: 956320444}
   - component: {fileID: 956320443}
+  - component: {fileID: 956320445}
   m_Layer: 5
   m_Name: BanArea
   m_TagString: Bin
@@ -723,6 +724,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 956320441}
   m_CullTransparentMesh: 1
+--- !u!114 &956320445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956320441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75889d75667260d46b5dc0d7083f95d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  binType: 1
 --- !u!1 &962724016
 GameObject:
   m_ObjectHideFlags: 0
@@ -868,6 +882,7 @@ GameObject:
   - component: {fileID: 1070207209}
   - component: {fileID: 1070207211}
   - component: {fileID: 1070207210}
+  - component: {fileID: 1070207212}
   m_Layer: 5
   m_Name: WarningArea
   m_TagString: Bin
@@ -933,6 +948,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1070207208}
   m_CullTransparentMesh: 1
+--- !u!114 &1070207212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070207208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75889d75667260d46b5dc0d7083f95d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  binType: 0
 --- !u!1 &1147872984
 GameObject:
   m_ObjectHideFlags: 0
@@ -965,14 +993,27 @@ MonoBehaviour:
   chatLogContainer: {fileID: 1641641232}
   chatEntryPrefab: {fileID: 8888729570350321964, guid: 9e403c4d7f327f7428721bf839437246, type: 3}
   scrollRect: {fileID: 1514543229}
-  preStreamGreetingSeconds: 5
-  streamSeconds: 60
-  postStreamGoodbyeSeconds: 5
+  greetingSeconds: 5
+  streamSeconds: 30
+  goodbyeSeconds: 5
   greetingDelay: {x: 0.25, y: 1}
-  normalDelay: {x: 0.5, y: 3}
+  streamDelay: {x: 0.5, y: 3}
   goodbyeDelay: {x: 0.25, y: 1}
   warningChance: 0.1
   banChance: 0.05
+  mistakeWeights:
+  - type: 0
+    weight: 1
+  - type: 1
+    weight: 1
+  - type: 2
+    weight: 1
+  - type: 3
+    weight: 1
+  - type: 4
+    weight: 1
+  - type: 5
+    weight: 1
 --- !u!4 &1147872986
 Transform:
   m_ObjectHideFlags: 0
