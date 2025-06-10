@@ -69,6 +69,7 @@ public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler
         if (hitBin != null)
         {
             // Dropped in a bin
+            hitBin.GetComponent<BinReceiver>().Receive(this);
             placeholder.GetComponent<Placeholder>().Collapse();
             Destroy(gameObject);
         }

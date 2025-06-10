@@ -275,17 +275,3 @@ public class MessageSource
         foreach (var s in pool) queue.Enqueue(s);
     }
 }
-
-/* ─────────────────────────────────────────────────────────────────────────────
- *  Example BinReceiver script (attach to each bin Image)
- *  Detects drops via IPointerEnter/IPointerExit in ChatEntryDraggable.
- * ────────────────────────────────────────────────────────────────────────────*/
-// public class BinReceiver : MonoBehaviour
-// {
-//     public ChatSpawner.BinType binType;
-//
-//     public void Receive(ChatEntryDraggable entry)
-//     {
-//         FindObjectOfType<ChatSpawner>().ReportDrop(entry.category, binType);
-//     }
-// }
