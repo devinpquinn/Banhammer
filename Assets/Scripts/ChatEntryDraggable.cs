@@ -11,7 +11,6 @@ public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler
 
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
-    private Vector3 returnTarget;
     private bool returning;
     
     //  View in inspector
@@ -76,7 +75,6 @@ public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler
         else
         {
             // Return to original spot
-            returnTarget = placeholder.position;
             returning = true;
             canvasGroup.blocksRaycasts = true;
         }
@@ -87,8 +85,8 @@ public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler
     {
         if (returning)
         {
-            transform.position = Vector3.MoveTowards(transform.position, returnTarget, returnSpeed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, returnTarget) < 0.01f)
+            transform.position = Vector3.MoveTowards(transform.position, placeholder.position, returnSpeed * Time.deltaTime);
+            if (Vector3.Distance(transform.position, placeholder.position) < 0.01f)
             {
                 transform.SetParent(originalParent);
                 transform.SetSiblingIndex(placeholder.GetSiblingIndex());

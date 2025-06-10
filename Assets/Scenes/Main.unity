@@ -994,10 +994,10 @@ MonoBehaviour:
   chatEntryPrefab: {fileID: 8888729570350321964, guid: 9e403c4d7f327f7428721bf839437246, type: 3}
   scrollRect: {fileID: 1514543229}
   greetingSeconds: 5
-  streamSeconds: 30
+  streamSeconds: 60
   goodbyeSeconds: 5
   greetingDelay: {x: 0.25, y: 1}
-  streamDelay: {x: 0.5, y: 3}
+  streamDelay: {x: 0.5, y: 2}
   goodbyeDelay: {x: 0.25, y: 1}
   warningChance: 0.1
   banChance: 0.05
