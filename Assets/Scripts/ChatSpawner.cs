@@ -188,10 +188,9 @@ public class ChatSpawner : MonoBehaviour
         // Set parent (without world position retention)
         entry.transform.SetParent(chatLogContainer, false);
 
-        // Set username + message
-        var texts = entry.GetComponentsInChildren<TextMeshProUGUI>();
-        texts[0].text = user;
-        texts[1].text = message;
+        // Set username + message();
+        TextMeshProUGUI entryText = entry.GetComponentInChildren<TextMeshProUGUI>();
+        entryText.text = $"<b>{user}</b>: {message}";
 
         // category (for drag bins)
         entry.GetComponent<ChatEntryDraggable>().category = category;
