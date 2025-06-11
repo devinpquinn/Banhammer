@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class ChatSpawner : MonoBehaviour
 {
@@ -82,8 +83,11 @@ public class ChatSpawner : MonoBehaviour
         goodbyeSrc = new MessageSource("goodbye");
 
         // usernames
-        usernames = new List<string>(Resources.Load<TextAsset>("usernames")
-            .text.Split('\n', System.StringSplitOptions.RemoveEmptyEntries));
+        usernames = new List<string>(
+            Resources.Load<TextAsset>("usernames")
+                .text.Split('\n', System.StringSplitOptions.RemoveEmptyEntries)
+                .Select(u => u.Trim())
+        );
 
         // initialise counters
         foreach (MistakeType mt in System.Enum.GetValues(typeof(MistakeType)))
