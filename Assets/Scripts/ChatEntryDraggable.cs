@@ -43,12 +43,13 @@ public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler
             parentRect = transform.parent.GetComponent<RectTransform>();
         }
         
-        float difference = parentRect.rect.height - storedParentHeight;
-        Vector2 offset = rectTransform.anchoredPosition;
-        offset.y -= difference;
-        rectTransform.anchoredPosition = offset;
+        // Adjust position to compensate for any scrolling
+        float differenceY = parentRect.rect.height - storedParentHeight;
+        Vector2 offsetY = rectTransform.anchoredPosition;
+        offsetY.y -= differenceY;
+        rectTransform.anchoredPosition = offsetY;
         
-        transform.SetParent(canvas.transform); // drag on top
+        transform.SetParent(canvas.transform); // Drag on top
         canvasGroup.blocksRaycasts = false;
     }
 
