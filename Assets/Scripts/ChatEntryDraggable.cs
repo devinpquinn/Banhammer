@@ -3,11 +3,13 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 
-public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerDownHandler
 {
     private Transform originalParent;
     private RectTransform placeholder;
     private Canvas canvas;
+    private RectTransform parentRect;
+    private float storedParentHeight;
 
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
@@ -35,6 +37,16 @@ public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler
         {
             canvas = GetComponentInParent<Canvas>();
         }
+        
+        if(parentRect == null)
+        {
+            parentRect = transform.parent.GetComponent<RectTransform>();
+        }
+        
+        float difference = parentRect.rect.height - storedParentHeight;
+        Vector2 offset = rectTransform.anchoredPosition;
+        offset.y -= difference;
+        rectTransform.anchoredPosition = offset;
         
         transform.SetParent(canvas.transform); // drag on top
         canvasGroup.blocksRaycasts = false;
@@ -76,5 +88,15 @@ public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler
             transform.SetSiblingIndex(placeholder.GetSiblingIndex());
             Destroy(placeholder.gameObject);
         }
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if(parentRect == null)
+        {
+            parentRect = transform.parent.GetComponent<RectTransform>();
+        }
+        
+        storedParentHeight = parentRect.rect.height;
     }
 }
