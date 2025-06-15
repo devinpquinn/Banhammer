@@ -11,16 +11,12 @@ public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler
 
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
-    private bool returning;
     
     //  View in inspector
     public ChatSpawner.ChatCategory category;
 
     // Assign in inspector
     public GameObject placeholderPrefab;
-
-    // Tuning values
-    private float returnSpeed = 50f;
 
     void Awake()
     {
@@ -42,7 +38,6 @@ public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler
         
         transform.SetParent(canvas.transform); // drag on top
         canvasGroup.blocksRaycasts = false;
-        returning = false;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -75,24 +70,11 @@ public class ChatEntryDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler
         else
         {
             // Return to original spot
-            returning = true;
             canvasGroup.blocksRaycasts = true;
-        }
-    }
-
-
-    void Update()
-    {
-        if (returning)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, placeholder.position, returnSpeed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, placeholder.position) < 0.01f)
-            {
-                transform.SetParent(originalParent);
-                transform.SetSiblingIndex(placeholder.GetSiblingIndex());
-                Destroy(placeholder.gameObject);
-                returning = false;
-            }
+            transform.position = placeholder.position; // Snap to placeholder
+            transform.SetParent(originalParent);
+            transform.SetSiblingIndex(placeholder.GetSiblingIndex());
+            Destroy(placeholder.gameObject);
         }
     }
 }
