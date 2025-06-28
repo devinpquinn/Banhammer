@@ -22,13 +22,19 @@ using System.Linq;
 
 public class ChatSpawner : MonoBehaviour
 {
-    /* ────────────────── public inspector fields ────────────────── */
-
-    [Header("Containers & Prefabs")]
+    /* ────────────────── public inspector fields ────────────────── */    [Header("Containers & Prefabs")]
     [Tooltip("Parent for the spawned chat entries (typically the Content object inside the Scroll View).")]
     public Transform chatLogContainer;
     public GameObject chatEntryPrefab;
     public ScrollRect scrollRect;          // optional auto-scroll to bottom
+
+    [Header("Mistake Summary UI")]
+    [Tooltip("Parent container with vertical layout group for mistake summary entries")]
+    public GameObject mistakeSummaryPanel;
+    public Transform mistakeSummaryContainer;
+    public GameObject mistakeSummaryPrefab;
+    [Tooltip("Text component to display the final score")]
+    public TextMeshProUGUI finalScoreText;
 
     [Header("Phase Durations (seconds)")]
     public float greetingSeconds = 5f;    // hello burst before stream starts
@@ -220,9 +226,7 @@ public class ChatSpawner : MonoBehaviour
             if (d.category == ChatCategory.Ban) mistakeCounts[MistakeType.MissedBan]++;
             else if (d.category == ChatCategory.Warning) mistakeCounts[MistakeType.MissedWarning]++;
         }
-    }
-
-    private void PrintMistakeSummary()
+    }    private void PrintMistakeSummary()
     {
         Debug.Log("=== Mistake Summary ===");
         int total = 0;
@@ -237,6 +241,85 @@ public class ChatSpawner : MonoBehaviour
             Debug.Log($"{mt}: {count}  (weight {weight}, penalty {penalty})");
         }
         Debug.Log($"TOTAL PENALTY: {total}");
+        
+        // Display in UI
+        DisplayMistakeSummaryUI(total);
+    }
+
+    private void DisplayMistakeSummaryUI(int totalPenalty)
+    {
+        if (mistakeSummaryContainer == null || mistakeSummaryPrefab == null)
+        {
+            Debug.LogWarning("Mistake summary UI components not assigned!");
+            return;
+        }
+        
+        // Clear the mistake summary panel
+        if (mistakeSummaryPanel != null)
+        {
+            mistakeSummaryPanel.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("Mistake summary panel not assigned!");
+        }
+        
+        // Clear previous final score text
+        if (finalScoreText != null)
+        {
+            finalScoreText.text = ""; // Clear previous score
+        }
+        else
+        {
+            Debug.LogWarning("Final score text not assigned!");
+        }
+
+        // Clear existing summary entries
+        foreach (Transform child in mistakeSummaryContainer)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Create summary entries for each mistake type that occurred
+        foreach (MistakeType mt in mistakeCounts.Keys)
+        {
+            int count = mistakeCounts[mt];
+            if (count > 0) // Only show mistakes that actually occurred
+            {
+                int weight = mistakeWeights.Find(m => m.type == mt)?.weight ?? 1;
+                int penalty = count * weight;
+                
+                CreateMistakeSummaryEntry(mt, count, penalty);
+            }
+        }
+
+        // Calculate and display final score
+        int finalScore = Mathf.Max(0, 100 - totalPenalty);
+        if (finalScoreText != null)
+        {
+            finalScoreText.text = $"Final Score: {finalScore}";
+        }
+    }
+
+    private void CreateMistakeSummaryEntry(MistakeType mistakeType, int count, int penalty)
+    {
+        GameObject summaryEntry = Instantiate(mistakeSummaryPrefab, mistakeSummaryContainer);
+        
+        // Get the TextMeshProUGUI components (assuming they are direct children)
+        TextMeshProUGUI[] textComponents = summaryEntry.GetComponentsInChildren<TextMeshProUGUI>();
+        
+        if (textComponents.Length >= 2)
+        {
+            // First text component: mistake type and count
+            textComponents[0].text = $"{mistakeType} x {count}";
+            
+            // Second text component: penalty
+            textComponents[1].text = $"-{penalty}";
+        }
+        else
+        {
+            Debug.LogWarning($"MistakeSummary prefab should have at least 2 TextMeshProUGUI components, found {textComponents.Length}");
+        }
     }
 
     /* ────────────────── utility ────────────────── */
