@@ -297,7 +297,7 @@ public class ChatSpawner : MonoBehaviour
         int finalScore = Mathf.Max(0, 100 - totalPenalty);
         if (finalScoreText != null)
         {
-            finalScoreText.text = $"Final Score: {finalScore}";
+            finalScoreText.text = $"Score: {finalScore}";
         }
     }
 
